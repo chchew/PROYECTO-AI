@@ -47,8 +47,21 @@ def ended_event(data):
     socket.emit('player_ready', data)
     
 
-def get_new_move():
-    return []
+def get_new_move(board, player_turn_id):
+    free = []
+	free = FreeSpace(board)
+
+	quality = -10000
+	nextMove = []
+	for i in free:
+		#MiniMax
+		score = MiniMax(board, player_turn_id, -100000, +100000, 0, 0, False, i)
+		if (score > quality):
+			nextMove.clear()
+			quality = score			
+			nextMove.append(i)
+
+	return [nextMove[0][0],nextMove[0][1]]
 
 if __name__ == "__main__":
     socket.connect(server_address)
