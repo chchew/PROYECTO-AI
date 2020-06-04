@@ -1,10 +1,20 @@
-def space_available(board):
-    free = []
-    for i in range(len(board)):
-	    for j in range(len(board[0])):
-		    if board[i][j] == 99:
-			    free.append((i,j))
-    return free
+
+def direction_move(board, player_turn_id):
+	free = []
+	free = FreeSpace(board)
+
+	quality = -10000
+	nextMove = []
+	for i in free:
+		
+		score = MM(board, player_turn_id, -100000, +100000, 0, 0, False, i)
+		if (score > quality):
+			nextMove.clear()
+			quality = score			
+			nextMove.append(i)
+
+	return [nextMove[0][0],nextMove[0][1]]
+
 
 def MM(board,player_turn_id,alpha,beta,depth,nodeIndex,isMaximizingPlayer,move):
 	player = player_turn_id if isMaximizingPlayer else (player_turn_id % 2) + 1
@@ -46,19 +56,11 @@ def MM(board,player_turn_id,alpha,beta,depth,nodeIndex,isMaximizingPlayer,move):
 
 	return 0
     
-def direction_move(board, player_turn_id):
-	free = []
-	free = FreeSpace(board)
-
-	quality = -10000
-	nextMove = []
-	for i in free:
-		#MiniMax
-		score = MM(board, player_turn_id, -100000, +100000, 0, 0, False, i)
-		if (score > quality):
-			nextMove.clear()
-			quality = score			
-			nextMove.append(i)
-
-	return [nextMove[0][0],nextMove[0][1]]
+def space_available(board):
+    free = []
+    for i in range(len(board)):
+	    for j in range(len(board[0])):
+		    if board[i][j] == 99:
+			    free.append((i,j))
+    return free
 

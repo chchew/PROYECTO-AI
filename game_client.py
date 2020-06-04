@@ -50,6 +50,5 @@ def ended_event(data):
 def get_new_move():
     return []
 
-
 if __name__ == "__main__":
     socket.connect(server_address)
