@@ -31,9 +31,9 @@ def direction_move(board, player_turn_id):
 	return [nextMove[0][0],nextMove[0][1]]
 
 
-def MinMx(board,player_turn_id,alpha,beta,depth,nodeIndex,isMaximizingPlayer,move):
+def MiniMax(board,player_turn_id,alpha,beta,depth,nodeIndex,isMaximizingPlayer,move):
 	player = player_turn_id if isMaximizingPlayer else (player_turn_id % 2) + 1
-	_,validate = LookAhead(board, player_turn_id, move, not isMaximizingPlayer)
+	_,validate = look_ahead(board, player_turn_id, move, not isMaximizingPlayer)
 	
 	
 	if (depth == 0 or validate != 0):
@@ -45,9 +45,9 @@ def MinMx(board,player_turn_id,alpha,beta,depth,nodeIndex,isMaximizingPlayer,mov
 	if (isMaximizingPlayer):
 		quality = -100000
 		for i in free:
-			board = LookAhead(board,player,move,isMaximizingPlayer)
+			board = look_ahead(board,player,move,isMaximizingPlayer)
 			
-			score = MM(board, player, alpha, beta, depth + 1, 0, False, i)
+			score = MiniMax(board, player, alpha, beta, depth + 1, 0, False, i)
 			quality = max(quality, score)
 			alpha = max(alpha, score)
 			if (beta <= alpha):
@@ -60,9 +60,9 @@ def MinMx(board,player_turn_id,alpha,beta,depth,nodeIndex,isMaximizingPlayer,mov
 	if (not(isMaximizingPlayer)):
 		quality = 100000
 		for j in free:
-			board = LookAhead(board,player,move,isMaximizingPlayer)
+			board = look_ahead(board,player,move,isMaximizingPlayer)
 			
-			score = MM(board, player, alpha, beta, depth + 1, 0, True, j)
+			score = MiniMax(board, player, alpha, beta, depth + 1, 0, True, j)
 			quality = min(quality,score)
 			beta = min(beta, score)
 
