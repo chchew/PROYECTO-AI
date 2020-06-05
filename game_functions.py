@@ -22,7 +22,7 @@ def direction_move(board, player_turn_id):
 	nextMove = []
 	for i in free:
 		
-		score = MM(board, player_turn_id, -100000, +100000, 0, 0, False, i)
+		score = MiniMaxM(board, player_turn_id, -100000, +100000, 0, 0, False, i)
 		if (score > quality):
 			nextMove.clear()
 			quality = score			
